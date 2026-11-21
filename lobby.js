@@ -60,7 +60,7 @@
     by('lobbyLoadout').addEventListener('click',()=>openLoadout('loadoutPanel'));
     by('lobbyStart').addEventListener('click',startFromLobby);
     by('menuBack').addEventListener('click',()=>{
-      if (by('startBtn').textContent.includes('RESUME')) return;
+      if (by('startBtn').textContent.includes('RESUME')) { by('startBtn').click(); return; }
       previousMenu==='home' ? goHome() : goLobby();
     });
     by('endLobby').addEventListener('click',goLobby);
@@ -71,6 +71,8 @@
         by('lobby').classList.add('hide');
       }
     });
+    const resumeWatcher = new MutationObserver(() => { if (by('startBtn').textContent.includes('RESUME')) by('menuBack').textContent = '← RESUME MATCH'; });
+    resumeWatcher.observe(by('startBtn'), {childList:true, characterData:true, subtree:true});
     const watched = by('loadoutPanel');
     if (watched && typeof MutationObserver !== 'undefined') {
       const observer=new MutationObserver(()=>{if(!by('lobby').classList.contains('hide')||!by('home').classList.contains('hide')) syncLobby()});
