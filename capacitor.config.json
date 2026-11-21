@@ -1,0 +1,8 @@
+{
+  "appId": "com.strike5.mobile",
+  "appName": "STRIKE 5",
+  "webDir": "dist",
+  "android": {
+    "backgroundColor": "#07101b"
+  }
+}
