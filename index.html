@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="STRIKE 5" />
 <link rel="manifest" href="./manifest.webmanifest" />
 <link rel="apple-touch-icon" href="./icon-192.png" />
-<title>STRIKE 5 — Mobile FPS V4</title>
+<title>STRIKE 5 — Mobile FPS V5 (Homepage + Lobby)</title>
 <style>
 :root{--cyan:#4ce3f7;--red:#fe5f74;--bg:#07101b;--ink:#effbff;--muted:#9ab3c4}*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;overscroll-behavior:none;touch-action:none}#renderCanvas{width:100%;height:100%;display:block;outline:none;touch-action:none}.hide{display:none!important}#hud{position:fixed;inset:0;pointer-events:none;user-select:none;-webkit-user-select:none}#hud button{pointer-events:auto}#topBar{position:absolute;top:max(8px,env(safe-area-inset-top));left:max(14px,env(safe-area-inset-left));right:max(14px,env(safe-area-inset-right));display:flex;align-items:flex-start;justify-content:space-between;gap:12px}#scoreboard{display:flex;align-items:center;background:#03111aca;border:1px solid #9ce9f522;backdrop-filter:blur(8px);border-radius:11px;overflow:hidden;font-weight:900;letter-spacing:.5px;box-shadow:0 10px 30px #0005}#scoreboard span{display:block;padding:9px 16px;font-size:19px}#blueScore{background:#00a9c54d;color:#a0f9ff}#redScore{background:#c7384e55;color:#ffadb8}#time{font-size:15px;font-variant-numeric:tabular-nums;padding:0 11px;color:#e9f8ff}#meta{display:flex;gap:8px;align-items:center}#fps{font-size:11px;color:#b9d1df;background:#061825bb;padding:7px 9px;border-radius:7px}#pauseBtn{font-size:13px;font-weight:800;border:1px solid #9ce9f533;color:#fff;background:#051825cc;padding:8px 11px;border-radius:8px}#crosshair{position:absolute;left:50%;top:50%;width:26px;height:26px;transform:translate(-50%,-50%);transition:transform .1s;opacity:.93}#crosshair:before,#crosshair:after{content:"";position:absolute;background:#d7fcff;box-shadow:0 0 5px #000;left:12px;top:1px;width:2px;height:24px}#crosshair:after{transform:rotate(90deg)}#crosshair i{position:absolute;z-index:1;left:10px;top:10px;width:6px;height:6px;border:1.5px solid var(--cyan);border-radius:50%;background:#07101b}#crosshair.hit:before,#crosshair.hit:after{background:#ff697f}#crosshair.ads{transform:translate(-50%,-50%) scale(.7)}#status{position:absolute;left:50%;top:22%;transform:translateX(-50%);font-size:15px;font-weight:900;text-shadow:0 2px 8px #000;white-space:nowrap;opacity:0;transition:opacity .12s}#status.show{opacity:1}#bottomInfo{position:absolute;bottom:max(14px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);min-width:225px;display:flex;gap:15px;align-items:center;justify-content:center;background:#03131bc9;border:1px solid #b1dbe527;border-radius:13px;padding:9px 14px;backdrop-filter:blur(9px)}#healthArea{min-width:115px}#healthLabel{font-size:10px;color:#acc8da;font-weight:800;letter-spacing:1.2px}#healthValue{font-size:17px;font-weight:900}#healthTrack{width:115px;height:5px;background:#edf3f434;border-radius:6px;margin-top:4px;overflow:hidden}#healthFill{height:100%;width:100%;background:linear-gradient(90deg,#4ce3f7,#a5f7fa);transition:width .12s}#ammo{font-size:24px;font-weight:900;line-height:1;white-space:nowrap}#ammo small{font-size:11px;color:#abbac8}#joyPad{position:absolute;width:142px;height:142px;left:max(22px,env(safe-area-inset-left));bottom:max(21px,env(safe-area-inset-bottom));border:2px solid #afebff44;border-radius:50%;background:#cbeaff11;pointer-events:auto;touch-action:none;z-index:2}#joyPad:before{content:"";position:absolute;inset:23px;border:1px dashed #cae8ff29;border-radius:50%}#joyKnob{position:absolute;width:65px;height:65px;left:37px;top:37px;border-radius:50%;border:2px solid #b5eeff77;background:radial-gradient(circle,#90c1e85e,#306a875c);box-shadow:0 0 14px #6bd6fd20;pointer-events:none}#rightControls{position:absolute;right:max(20px,env(safe-area-inset-right));bottom:max(19px,env(safe-area-inset-bottom));display:flex;align-items:center;gap:12px;z-index:3}#minorControls{display:flex;flex-direction:column;gap:10px}.act{height:55px;min-width:62px;padding:0 10px;color:#ecffff;border:1.5px solid #a8d5e65c;background:#071622c9;border-radius:15px;font-size:11px;font-weight:900;letter-spacing:.6px;box-shadow:0 9px 19px #0006;touch-action:none}#fireBtn{width:104px;height:104px;background:radial-gradient(circle at 40% 35%,#f57a89c7,#a11937c9);border:3px solid #ffb9c5ba;border-radius:50%;color:white;font-size:15px;font-weight:1000;letter-spacing:1px;text-shadow:0 2px 7px #400;box-shadow:0 0 29px #f24d6566;touch-action:none}#fireBtn:active{filter:brightness(1.3)}#adsBtn.active{background:#0aa7b777;border-color:#7ff8ff}#lookRegion{position:absolute;left:39%;right:0;top:0;bottom:0;pointer-events:auto;touch-action:none;z-index:1}#damageFlash{position:fixed;inset:0;pointer-events:none;opacity:0;background:radial-gradient(transparent 45%,#dc243f80 100%);transition:opacity .13s}#killfeed{position:absolute;right:max(15px,env(safe-area-inset-right));top:58px;text-align:right;font-size:11px;font-weight:750;color:#e6fbff;line-height:1.8;text-shadow:0 2px 7px #000}.overlay{position:fixed;z-index:9;inset:0;background:radial-gradient(ellipse at 50% 20%,#194057ed,#040c15f9 73%);display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;overflow-y:auto}.panel{width:min(520px,95vw);padding:22px 26px;background:#061620dc;border:1px solid #55b9c64f;border-radius:20px;box-shadow:0 20px 90px #0009}.eyebrow{color:var(--cyan);font-size:11px;letter-spacing:3px;font-weight:900;margin-bottom:7px}.logo{font-size:clamp(36px,7vw,67px);letter-spacing:-2px;font-weight:1000;line-height:1;margin:4px 0 8px;text-shadow:0 0 25px #52e5ff33}.logo em{font-style:normal;color:var(--cyan)}.sub{font-size:14px;color:#b9d2e0;line-height:1.5}.rule{font-size:12px;color:#d6eefa;line-height:1.7;margin:17px auto}.primary{margin-top:12px;width:100%;max-width:310px;height:50px;border:0;border-radius:12px;background:linear-gradient(110deg,#2adbeb,#71e4f8);color:#00202b;letter-spacing:1px;font-weight:1000;font-size:15px;box-shadow:0 8px 22px #37c6d02f}.primary:active{filter:brightness(1.13)}#loading{font-size:12px;color:#eafcff;margin-top:10px}#rotateHint{position:fixed;z-index:11;inset:0;background:#030b13f7;display:none;align-items:center;justify-content:center;padding:25px;text-align:center;color:#d7effc;font-size:17px;font-weight:800;pointer-events:none}#rotateHint span{display:block;font-size:50px;margin-bottom:10px}@media (orientation:portrait) and (max-width:700px){#rotateHint{display:flex}}@media(max-height:440px){.panel{padding:13px 20px}.logo{font-size:42px}.rule{margin:8px auto}.sub{font-size:12px}.primary{height:42px;margin-top:6px}#joyPad{width:116px;height:116px}#joyKnob{width:56px;height:56px;left:28px;top:28px}#rightControls{gap:9px}#fireBtn{width:88px;height:88px}#minorControls{gap:7px}.act{height:43px;min-width:57px}#bottomInfo{padding:5px 10px;bottom:5px}#scoreboard span{padding:6px 12px;font-size:17px}}
 
@@ -35,6 +35,7 @@
 #gunStatLine{font-size:10px;color:#bce4ee;margin-top:4px}#qualityRow{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;margin:8px 0 0;font-size:11px;color:#9ab3c4}#qualityRow select{color:white;background:#123040;border:1px solid #4ce3f755;border-radius:7px;padding:5px;touch-action:manipulation}#sensitivityRow{display:flex;align-items:center;justify-content:center;gap:9px;color:#b9d8e8;font-size:11px;margin:8px 0}#sensitivityRange{width:125px;accent-color:#4ce3f7;touch-action:pan-x}#sensitivityValue{min-width:35px;color:#8beaf5;font-weight:800}#killCounter{font-size:11px;font-weight:900;white-space:nowrap;color:#dcfaff;padding:7px 9px;background:#061825bb;border-radius:7px}
 @media(max-height:450px){#charChoices{max-height:75px}#gunChoices{max-height:65px}}
 </style>
+<link rel="stylesheet" href="./lobby.css">
 <script src="./vendor/babylon.js"></script>
 </head>
 <body>
@@ -49,13 +50,58 @@
   <div id="rightControls"><div id="minorControls"><button class="act" id="skillBtn">SKILL</button><button class="act" id="adsBtn">ADS</button><button class="act" id="reloadBtn">RELOAD</button><button class="act" id="jumpBtn">JUMP</button></div><button id="fireBtn">FIRE</button></div>
   <div id="bottomInfo"><div id="healthArea"><div id="healthLabel">HEALTH</div><div id="healthValue">100 HP</div><div id="healthTrack"><div id="healthFill"></div></div></div><div id="ammo">30 <small>/ 120</small></div></div>
 </div>
-<div class="overlay" id="menu"><div class="panel"><div class="eyebrow">MOBILE FIRST PERSON SHOOTER · MOBILE POLISH · V4</div><div class="logo">STRIKE <em>5</em></div><div class="sub">5 BLUE vs 5 RED · TEAM DEATHMATCH<br/>You + 4 friendly bots versus 5 enemy bots. <span id="profileXP">0 XP</span></div><div class="rule">◉ Left joystick: MOVE &nbsp; ◉ Right screen: AIM<br/>◉ FIRE: shoot &nbsp; ◉ ADS: zoom &nbsp; ◉ SKILL: ability &nbsp; ◉ RELOAD: ammo<br/>First team to 20 points wins, or highest score in 3 minutes. Select an operator and weapon below.</div><div class="loadout" id="loadoutPanel">
+<div class="overlay" id="home" aria-label="STRIKE 5 homepage">
+  <main class="hub">
+    <header class="hubTop"><div class="brand">STRIKE <strong>5</strong></div><span class="hubTag">MOBILE FPS · V5 PLAYTEST</span><span class="pilot">PLAYER · <b id="homeXP">0 XP</b></span></header>
+    <section class="heroArea">
+      <div><div class="heroKicker">ENTER THE ARENA</div><h1 class="heroHeading">YOUR SQUAD.<br><span>YOUR FIGHT.</span></h1><p class="heroDescription">Original 5v5 Team Deathmatch. Fight with four friendly AI teammates against five enemy bots. Select your Indian operator and customize your loadout.</p>
+        <div class="hubActions"><button type="button" class="hubButton primaryAction" id="homePlay">▶ PLAY 5v5</button><button type="button" class="hubButton" id="homeOperators">OPERATORS</button><button type="button" class="hubButton" id="homeArmory">GUNSMITH</button><button type="button" class="hubButton" id="homeSettings">SETTINGS</button></div>
+      </div><div class="hubVisual" aria-hidden="true"></div>
+    </section>
+    <footer class="homeFooter"><span class="hubMetric">12 INDIAN OPERATORS</span><span class="hubMetric">17 ORIGINAL GUNS</span><span class="hubMetric">3-MINUTE MATCH</span><span class="hubMetric">BOT MATCH · NO ONLINE MULTIPLAYER</span></footer>
+  </main>
+</div>
+<div class="overlay hide" id="lobby" aria-label="STRIKE 5 bot match lobby">
+  <main class="hub">
+    <header class="hubTop"><div class="brand">STRIKE <strong>5</strong></div><span class="hubTag">TEAM DEATHMATCH · BOT LOBBY</span><span class="pilot">5 vs 5</span></header>
+    <div class="lobbyHeading"><div><h1>READY ROOM</h1><p>1 player + 4 friendly AI vs 5 enemy AI · 3 minutes · first to 20 eliminations</p></div><button type="button" class="hubButton" id="lobbyHome">← HOME</button></div>
+    <section class="teamBoard" aria-label="Five teammates versus five enemy bots">
+      <div class="teamColumn">
+        <div class="teamHeader"><span>BLUE TEAM</span><span>5 / 5</span></div>
+        <div class="teamSlots">
+          <div class="teamSlot"><span class="slotAvatar" aria-hidden="true">★</span><strong id="lobbyPlayerName">Arjun Rathore</strong><small>YOU</small></div>
+          <div class="teamSlot"><span class="slotAvatar" aria-hidden="true">◆</span><strong>Alpha</strong><small>AI BOT</small></div>
+          <div class="teamSlot"><span class="slotAvatar" aria-hidden="true">◆</span><strong>Bravo</strong><small>AI BOT</small></div>
+          <div class="teamSlot"><span class="slotAvatar" aria-hidden="true">◆</span><strong>Charlie</strong><small>AI BOT</small></div>
+          <div class="teamSlot"><span class="slotAvatar" aria-hidden="true">◆</span><strong>Delta</strong><small>AI BOT</small></div>
+        </div>
+      </div>
+      <div class="teamColumn red">
+        <div class="teamHeader"><span>RED TEAM</span><span>5 / 5</span></div>
+        <div class="teamSlots">
+          <div class="teamSlot"><span class="slotAvatar" aria-hidden="true">✕</span><strong>Red 1</strong><small>AI BOT</small></div>
+          <div class="teamSlot"><span class="slotAvatar" aria-hidden="true">✕</span><strong>Red 2</strong><small>AI BOT</small></div>
+          <div class="teamSlot"><span class="slotAvatar" aria-hidden="true">✕</span><strong>Red 3</strong><small>AI BOT</small></div>
+          <div class="teamSlot"><span class="slotAvatar" aria-hidden="true">✕</span><strong>Red 4</strong><small>AI BOT</small></div>
+          <div class="teamSlot"><span class="slotAvatar" aria-hidden="true">✕</span><strong>Red 5</strong><small>AI BOT</small></div>
+        </div>
+      </div>
+    </section>
+    <div class="lobbyToolbar">
+      <div class="lobbyLoadout"><strong id="lobbyOperator">Arjun Rathore</strong> · <span id="lobbyWeapon">Surya-7</span><div class="hubHint">Selected operator and equipped weapon · AI opponent lobby</div></div>
+      <button type="button" class="hubButton" id="lobbyLoadout">LOADOUT / ARMORY</button>
+      <button type="button" class="hubButton primaryAction" id="lobbyStart">▶ START BOT MATCH</button>
+    </div>
+    <div id="lobbyStatus" role="status">Offline bot team match · no online matchmaking</div>
+  </main>
+</div>
+<div class="overlay hide" id="menu"><div class="panel"><button type="button" id="menuBack">← BACK TO LOBBY</button><div class="eyebrow">MOBILE FIRST PERSON SHOOTER · V5 LOBBY + LOADOUT</div><div class="logo">STRIKE <em>5</em></div><div class="sub">5 BLUE vs 5 RED · TEAM DEATHMATCH<br/>You + 4 friendly bots versus 5 enemy bots. <span id="profileXP">0 XP</span></div><div class="rule">◉ Left joystick: MOVE &nbsp; ◉ Right screen: AIM<br/>◉ FIRE: shoot &nbsp; ◉ ADS: zoom &nbsp; ◉ SKILL: ability &nbsp; ◉ RELOAD: ammo<br/>First team to 20 points wins, or highest score in 3 minutes. Select an operator and weapon below.</div><div class="loadout" id="loadoutPanel">
   <div class="choiceTitle">OPERATOR · 12 SELECTABLE</div><div id="charChoices" class="choiceRow"></div>
   <div class="choiceTitle">WEAPON · 17 SELECTABLE</div><div id="gunFilters" class="choiceRow"></div><div id="gunChoices" class="choiceRow"></div><div class="choiceTitle">GUNSMITH · MASTERY REWARDS</div><div id="gunsmithChoices" class="choiceRow"></div>
   <div class="choiceTitle">TEST ARMOR · HELMET + VEST</div><div id="armorChoices" class="choiceRow"></div>
   <div id="selectionHint"></div><div id="gunStatLine"></div>
 </div><div id="qualityRow"><label for="qualitySelect">Graphics</label><select id="qualitySelect"><option value="auto">Auto performance</option><option value="battery">Battery saver</option><option value="quality">Higher detail</option></select></div><div id="sensitivityRow"><label for="sensitivityRange">Aim sensitivity</label><input id="sensitivityRange" type="range" min="50" max="180" step="10" value="100"><output id="sensitivityValue">100%</output></div><button id="startBtn" class="primary">START MATCH →</button><div id="loading">Best played in landscape. Engine bundled for offline Android play.</div></div></div>
-<div class="overlay hide" id="end"><div class="panel"><div class="eyebrow">MATCH COMPLETE</div><div class="logo" id="resultTitle">VICTORY</div><div class="sub" id="resultText"></div><button id="againBtn" class="primary">PLAY AGAIN →</button></div></div>
+<div class="overlay hide" id="end"><div class="panel"><div class="eyebrow">MATCH COMPLETE</div><div class="logo" id="resultTitle">VICTORY</div><div class="sub" id="resultText"></div><button id="againBtn" class="primary">PLAY AGAIN →</button><button type="button" id="endLobby" class="hubButton">RETURN TO LOBBY</button></div></div>
 <div id="rotateHint"><div><span>📱↔️</span>Rotate your iPhone to landscape<br/><small style="font-weight:400;color:#a5c5d3">Landscape is needed for comfortable FPS controls.</small></div></div>
 <script>
 (()=>{'use strict';
@@ -228,5 +274,6 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 if('serviceWorker' in navigator&&location.protocol==='https:')window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 })();
 </script>
+<script src="./lobby.js"></script>
 </body>
 </html>
