@@ -1,5 +1,5 @@
-import {readFileSync,existsSync} from 'node:fs';
-import {strict as assert} from 'node:assert';
+import { readFileSync, existsSync } from 'node:fs';
+import { strict as assert } from 'node:assert';
 import vm from 'node:vm';
 const html=readFileSync('index.html','utf8');
 const match=html.match(/<script>\s*([\s\S]*?)\s*<\/script>/);
@@ -10,5 +10,7 @@ const guns=match[1].match(/const WEAPONS=\[([\s\S]*?)\];/);
 assert.ok(char && guns,'Roster and weapons missing');
 assert.equal((char[1].match(/\{id:'/g)||[]).length,12);
 assert.equal((guns[1].match(/\{id:'/g)||[]).length,17);
-for(const path of ['manifest.webmanifest','sw.js','icon.svg','capacitor.config.json','scripts/build-web.mjs']) assert.ok(existsSync(path),path+' missing');
-console.log('PASS: game syntax, 12 operators, 17 guns, PWA assets');
+assert.ok(html.includes('<script src="./vendor/babylon.js"></script>'),'Offline engine path missing');
+assert.ok(html.includes('id="sensitivityRange"')&&html.includes('id="killCounter"'));
+for(const file of ['manifest.webmanifest','sw.js','icon.svg','capacitor.config.json','scripts/build-web.mjs']) assert.ok(existsSync(file),file+' missing');
+console.log('PASS: JS syntax, 12 characters, 17 weapons, sensitivity, K/D HUD, local engine path');
