@@ -1,0 +1,19 @@
+{
+  "name": "STRIKE 5 — Tactical FPS Playtest V3",
+  "short_name": "STRIKE 5",
+  "description": "5v5 bots shooter playtest with 12 original Indian characters, 17 weapons",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#07101b",
+  "theme_color": "#07101b",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
