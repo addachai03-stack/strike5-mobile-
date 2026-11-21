@@ -1,7 +1,7 @@
 {
-  "name": "STRIKE 5 — Tactical FPS Playtest V4",
+  "name": "STRIKE 5 — Homepage + 5v5 Lobby V5",
   "short_name": "STRIKE 5",
-  "description": "STRIKE 5 V4 mobile FPS with 12 Indian characters and 17 guns",
+  "description": "STRIKE 5 V5 bot lobby, homepage, operators, guns and match gameplay",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
