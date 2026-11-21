@@ -1,0 +1,44 @@
+/* STRIKE 5 V5 — dedicated landscape homepage + 5v5 bot lobby */
+#home,#lobby{z-index:12;padding:max(9px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(9px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));text-align:left;background:radial-gradient(ellipse at 85% 12%,#153a55,#060c16 56%,#02070e 100%);overscroll-behavior:contain}
+.hub{position:relative;width:min(1050px,100%);margin:auto;border:1px solid #398f9a5c;min-height:min(94dvh,575px);max-height:96dvh;overflow-y:auto;touch-action:pan-y;border-radius:20px;background:linear-gradient(135deg,#071622ef,#0c1e2edb);padding:clamp(13px,2.8vw,28px);box-shadow:0 20px 90px #000b}
+.hub:before{content:"";pointer-events:none;position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0px,transparent 70px,#8cf7ff08 71px),linear-gradient(120deg,transparent 45%,#008ba614 100%);border-radius:20px}
+.hub>*{position:relative;z-index:1}
+.hubTop,.hubBottom,.hubActions,.lobbyHeading,.lobbyToolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.hubTop{border-bottom:1px solid #7eeaf530;padding-bottom:10px}
+.brand{font-weight:1000;letter-spacing:-1.5px;font-size:clamp(23px,4vw,37px);line-height:1}
+.brand strong{color:#4ce3f7}
+.hubTag,.hubHint,.pilotLabel{color:#9ac9d7;font-size:11px;letter-spacing:.7px;font-weight:700}
+.pilot{border:1px solid #46bdcf50;padding:7px 12px;border-radius:9px;background:#112b3c;color:#e9fcff;font-weight:850;font-size:12px}
+.pilot b{color:#f3ca71}
+.heroArea{display:grid;grid-template-columns:1.3fr .7fr;align-items:center;gap:16px;padding:clamp(17px,3vw,39px) 0 20px}
+.heroKicker{color:#5be5f0;letter-spacing:3px;font-size:11px;font-weight:900}
+.heroHeading{font-size:clamp(30px,6vw,68px);line-height:.98;letter-spacing:-2px;margin:11px 0;color:#effbff;text-shadow:0 0 30px #4ce3f733}
+.heroHeading span{color:#58e5ef}
+.heroDescription{color:#c2d8e1;line-height:1.5;font-size:clamp(12px,1.4vw,15px);max-width:490px}
+.hubVisual{height:clamp(120px,23vw,226px);position:relative;filter:drop-shadow(0 0 26px #2ad7eb25)}
+.hubVisual:before{content:"";position:absolute;inset:11% 17%;border:2px solid #4ce3f789;transform:skew(-15deg) rotate(-7deg);background:linear-gradient(135deg,#36b2d522,#081725a0);box-shadow:inset 0 0 55px #47bcd922}
+.hubVisual:after{content:"5";position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(100px,18vw,230px);font-weight:1000;font-style:italic;color:#d6fbff;text-shadow:12px 12px 0 #176178,0 0 35px #64edfb44;transform:skew(-5deg)}
+.hubButton{border:1px solid #6dd9e45b;background:#143244d9;color:#edfbff;min-height:44px;padding:10px 20px;border-radius:10px;font-size:12px;font-weight:900;letter-spacing:.6px;touch-action:manipulation;cursor:pointer}
+.hubButton.primaryAction{background:linear-gradient(120deg,#35d4e7,#92f6fa);color:#07222b;border:0;box-shadow:0 7px 23px #3bcbdf4b;font-size:14px;min-width:180px}
+.hubButton:active{filter:brightness(1.2)}.hubButton:focus-visible{outline:2px solid white;outline-offset:2px}
+.homeFooter{margin-top:20px;padding-top:12px;border-top:1px solid #7eeaf51c;display:flex;gap:8px;flex-wrap:wrap}
+.hubMetric{font-size:11px;color:#c9e9f4;border:1px solid #5287925e;border-radius:7px;background:#0d2636;padding:7px 10px}
+.lobbyHeading{margin-top:17px}.lobbyHeading h1{font-size:clamp(20px,3vw,36px);letter-spacing:-1px;margin:0}.lobbyHeading p{font-size:12px;color:#accbd9;margin:5px 0}
+.teamBoard{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:15px 0}
+.teamColumn{background:#071520d9;border:1px solid #49bfd34a;border-radius:12px;padding:12px}
+.teamColumn.red{border-color:#e16a7766}
+.teamHeader{font-size:13px;font-weight:950;letter-spacing:1px;display:flex;justify-content:space-between;margin-bottom:9px;color:#6be7f8}
+.teamColumn.red .teamHeader{color:#ff929e}
+.teamSlots{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.teamSlot{border:1px solid #6a97a64d;background:#123041b5;min-height:74px;border-radius:8px;padding:8px 4px 5px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.teamColumn.red .teamSlot{background:#2f1827c4;border-color:#ac54645c}
+.teamSlot .slotAvatar{font-size:21px;line-height:1}
+.teamSlot strong{font-size:10px;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.teamSlot small{font-size:9px;color:#a9c5d3;white-space:nowrap}
+.lobbyLoadout{color:#c1e2ea;font-size:12px;flex:1}
+.lobbyLoadout strong{color:white}
+#lobbyStatus{color:#ffd68f;font-size:11px;min-height:16px;margin-top:7px}
+#menuBack{display:block;margin:0 0 8px 0;padding:7px 10px;border:1px solid #6dd8e763;background:#143344;color:#e7fbff;border-radius:8px;font-size:11px;font-weight:850;touch-action:manipulation}
+#endLobby{display:block;margin:8px auto;max-width:310px;width:100%}
+@media(max-height:425px){.hub{padding:12px 15px}.hubTop{padding-bottom:7px}.heroArea{padding:16px 0 9px}.homeFooter{margin-top:10px;padding-top:8px}.teamBoard{margin:9px 0}.teamColumn{padding:9px}.teamSlot{min-height:59px}.teamSlot .slotAvatar{font-size:17px}}
+@media(max-width:580px){.hubVisual{display:none}.heroArea{grid-template-columns:1fr}.teamBoard{grid-template-columns:1fr}.hubButton{padding:9px 12px}.teamSlot{min-height:57px}.hub{min-height:0}}
