@@ -1,7 +1,7 @@
 {
-  "name": "STRIKE 5 — Tactical FPS Playtest V3",
+  "name": "STRIKE 5 — Tactical FPS Playtest V4",
   "short_name": "STRIKE 5",
-  "description": "5v5 bots shooter playtest with 12 original Indian characters, 17 weapons",
+  "description": "STRIKE 5 V4 mobile FPS with 12 Indian characters and 17 guns",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
