@@ -16,32 +16,61 @@ zoya:["#5d694a","#414b38","#e5d0a0","AMMO SUPPLY"],
 lakshya:["#273448","#1b2d40","#488ff3","FLANKER SUIT"],
 kiara:["#27263b","#141a2d","#ad7de4","TECH VISOR"]
 };
-let mode="operator", engine=null,scene=null,preview=null,context2d=null,rotation=0,lastKey="",pointer=null,lastX=0;
+let mode="operator", engine=null,scene=null,preview=null,context2d=null,rotation=0,lastKey="",pointer=null,lastX=0,animatedParts=[],idleClock=0;
 const selection=()=>window.STRIKE5ReadOnly?.getSelection?.()||{character:{id:"arjun",name:"Arjun Rathore",role:"Assault",skill:"RAPID CHARGE"},weapon:{id:"surya",name:"Surya-7",type:"AR",damage:28,mag:30},helmet:1,vest:1};
 const visible=()=>!document.hidden&&!$("lobby").classList.contains("hide");
 const material=(name,color)=>{const m=new BABYLON.StandardMaterial(name,scene);m.diffuseColor=BABYLON.Color3.FromHexString(color);m.specularColor=new BABYLON.Color3(.15,.15,.15);return m;};
+// Deterministic painted textile camouflage: generated locally, no paid texture service.
+function fabric(name,base,accent,seed){
+ const m=material(name,base);
+ const texture=new BABYLON.DynamicTexture(name+"-fabric",{width:128,height:128},scene,false);
+ const ctx=texture.getContext();
+ ctx.fillStyle=base;ctx.fillRect(0,0,128,128);
+ let n=seed*839+17;
+ const rand=()=>{n=(Math.imul(n,1664525)+1013904223)|0;return (n>>>0)/4294967296};
+ const colors=[accent,"#253a3c","#657467",base];
+ for(let i=0;i<95;i++){
+  const x=rand()*130,y=rand()*130;
+  ctx.fillStyle=colors[Math.floor(rand()*colors.length)];
+  ctx.beginPath();ctx.ellipse(x,y,2+rand()*9,1+rand()*4,rand()*6,0,Math.PI*2);ctx.fill();
+ }
+ ctx.strokeStyle="#d1e0d018";ctx.lineWidth=.6;
+ for(let y=2;y<128;y+=8){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(128,y+1);ctx.stroke()}
+ texture.update();m.diffuseTexture=texture;m.specularColor=new BABYLON.Color3(.055,.075,.08);
+ return m;
+}
 const box=(name,parent,x,y,z,w,h,d,mat)=>{const a=BABYLON.MeshBuilder.CreateBox(name,{width:w,height:h,depth:d},scene);a.parent=parent;a.position.set(x,y,z);a.material=mat;a.isPickable=false;return a};
 const tube=(name,parent,x,y,z,h,diam,mat)=>{const a=BABYLON.MeshBuilder.CreateCylinder(name,{height:h,diameter:diam,tessellation:8},scene);a.parent=parent;a.position.set(x,y,z);a.material=mat;a.isPickable=false;return a};
 const sphere=(name,parent,x,y,z,size,mat)=>{const a=BABYLON.MeshBuilder.CreateSphere(name,{diameter:size,segments:8},scene);a.parent=parent;a.position.set(x,y,z);a.material=mat;a.isPickable=false;return a};
 function draw3d(s){
  if(!scene)return;
  if(preview)preview.dispose(false,true);
+ animatedParts=[];
  preview=new BABYLON.TransformNode("previewRoot",scene);
  const char=s.character||{}, weapon=s.weapon||{};
  const [color,armorColor,accentColor,gear]=outfit[char.id]||outfit.arjun;
- const uniform=material("uniform",color), armor=material("armor",armorColor), accent=material("accent",accentColor),black=material("black","#0e1b23"),face=material("skin","#a97f65");
+ const uniform=fabric("uniform-"+char.id,color,accentColor,char.id.length+char.name?.length||7), armor=material("armor",armorColor), accent=material("accent",accentColor),black=material("black","#0e1b23"),face=material("skin","#a97f65"),straps=material("webbing","#24333a"),metal=material("hardware","#647881");
  if(mode==="operator"){
    for(const sign of [-1,1]){
-     tube("leg",preview,sign*.18,.52,0,.82,.22,uniform);
+     const leg=tube("leg",preview,sign*.18,.52,0,.82,.22,uniform);animatedParts.push({mesh:leg,sign,kind:"leg"});
      box("boot",preview,sign*.18,.12,.08,.29,.18,.41,black);
      box("kneepad",preview,sign*.18,.40,.15,.24,.17,.13,armor);
-     tube("arm",preview,sign*.41,1.40,.01,.63,.22,uniform);
+     const arm=tube("arm",preview,sign*.41,1.40,.01,.63,.22,uniform);animatedParts.push({mesh:arm,sign,kind:"arm"});
      box("glove",preview,sign*.42,1.03,.08,.24,.19,.22,black);
      box("shoulder",preview,sign*.42,1.65,.10,.21,.13,.24,accent);
    }
    tube("torso",preview,0,1.36,0,.79,.60,uniform);
    box("plate vest",preview,0,1.38,.19,.68,.58,.33,armor);
    box("front ceramic",preview,0,1.46,.37,.49,.29,.06,black);
+   // Layered MOLLE webbing, two shoulder harnesses, radio and load-bearing belt.
+   for(const x of [-.27,.27]){box("shoulder strap",preview,x,1.57,.34,.115,.55,.105,straps);box("armor buckle",preview,x,1.56,.40,.105,.07,.035,metal)}
+   for(const y of [1.28,1.40])for(const x of [-.22,-.07,.08,.23])box("webbing loop",preview,x,y,.413,.12,.037,.025,straps);
+   box("radio",preview,-.36,1.40,.12,.15,.30,.15,black);
+   tube("radio antenna",preview,-.38,1.64,.11,.25,.025,metal);
+   box("belt",preview,0,1.04,.18,.72,.09,.37,straps);
+   box("belt buckle",preview,0,1.04,.39,.13,.08,.035,metal);
+   for(const x of [-.26,.26])box("side armor",preview,x,1.32,.02,.13,.36,.30,armor);
+   
    box("waist",preview,0,1.02,.10,.63,.15,.34,armor);
    box("pack",preview,0,1.36,-.30,.48,.53,.24,armor);
    for(const x of [-.23,0,.23])box("utility pouch",preview,x,1.06,.33,.18,.20,.16,black);
@@ -49,11 +78,19 @@ function draw3d(s){
    sphere("head",preview,0,2.10,0,.46,face);
    let helmet=sphere("ballistic helmet",preview,0,2.28,-.015,.50+(s.helmet||1)*.014,armor);helmet.scaling.y=.47;
    box("helmet visor",preview,0,2.15,.19,.45,.10,.13,black);
+   box("visor reflection",preview,0,2.17,.257,.34,.018,.022,metal);
+   for(const x of [-.26,.26]){box("ear comms",preview,x,2.12,.02,.095,.18,.13,black);box("helmet rail",preview,x,2.29,-.02,.07,.06,.24,metal)}
+   box("chin strap",preview,0,1.97,.16,.27,.045,.10,straps);
+   
    box("team patch",preview,.4,1.59,.18,.12,.12,.06,accent);
    if(char.id==="aanya"){box("medic cross vertical",preview,0,1.45,.42,.11,.28,.04,accent);box("medic cross horizontal",preview,0,1.45,.44,.26,.11,.04,accent);}
    if(char.id==="meher"){const hood=tube("sniper hood",preview,0,2.25,-.10,.42,.62,uniform);hood.scaling.z=.8;}
    if(char.id==="kabir"){for(const x of [-.47,.47])box("heavy shoulder",preview,x,1.64,0,.32,.24,.43,armor);}
-   if(char.id==="kiara")box("sensor visor",preview,0,2.13,.27,.39,.07,.06,accent);
+   if(char.id==="kiara"){box("sensor visor",preview,0,2.13,.27,.39,.07,.06,accent);box("wrist detector",preview,.44,1.1,.18,.20,.12,.18,accent);}
+   if(char.id==="veer"){box("face wrap",preview,0,2.04,.22,.39,.12,.08,black);}
+   if(char.id==="tara"){box("light knee shield",preview,-.18,.41,.20,.25,.13,.12,accent);}
+   if(char.id==="lakshya"){box("shoulder badge",preview,.43,1.56,.20,.15,.14,.05,accent);}
+   
    if(char.id==="ishaan")box("drone case",preview,0,1.40,-.44,.48,.30,.19,black);
    if(char.id==="rudra")box("tool kit",preview,-.41,1.13,-.11,.27,.31,.29,accent);
    if(char.id==="zoya")for(const x of [-.23,.23])box("ammo pouch",preview,x,1.29,.44,.17,.26,.09,accent);
@@ -63,6 +100,8 @@ function draw3d(s){
    const type=weapon.type||"AR",pistol=type==="PISTOL",sniper=type==="SNIPER",heavy=type==="LMG",smg=type==="SMG",shotgun=type==="SHOTGUN";
    const len=pistol?.7:sniper?1.85:heavy?1.65:shotgun?1.50:smg?1.02:1.42;
    box("receiver",preview,0,1.25,-.1,.29,.25,len*.47,armor);
+   for(const side of [-1,1])for(const dz of [-.12,.03,.18])box("receiver grooves",preview,side*.152,1.27,dz,.017,.09,.045,metal);
+   box("bolt housing",preview,0,1.43,-len*.04,.17,.055,.37,uniform);
    const barrel=tube("barrel",preview,0,1.28,len*.37,len*.62,.10,black);barrel.rotation.x=Math.PI/2;
    box("rail",preview,0,1.38,len*.04,.19,.06,len*.36,uniform);
    box("stock",preview,0,1.20,-len*.34,.25,.23,len*.24,black);
@@ -73,6 +112,10 @@ function draw3d(s){
    if(shotgun)box("pump",preview,0,1.19,len*.24,.27,.19,.29,uniform);
    if(heavy)box("ammo box",preview,.25,1.1,-.02,.26,.31,.29,black);
    const muzzle=tube("muzzle",preview,0,1.28,len*.69,.16,.16,accent);muzzle.rotation.x=Math.PI/2;
+   if(!pistol){for(const dz of [.13,.26,.39])box("handguard vent",preview,.165,1.33,dz,.012,.085,.045,black);}
+   if(sniper)box("scope lens",preview,0,1.52,.31,.17,.17,.018,accent);
+   if(heavy)for(const side of [-1,1]){const bipod=tube("folded bipod",preview,side*.19,1.06,len*.44,.42,.027,metal);bipod.rotation.z=side*.22;}
+   
  }
  preview.rotation.y=rotation;
 }
@@ -145,8 +188,10 @@ function boot(){
  const obs=new MutationObserver(()=>{if(visible()){if(engine)engine.resize();refresh(true)}});
  obs.observe($("lobby"),{attributes:true,attributeFilter:["class"]});
  refresh(true);let previous=0;
- const draw=()=>{if(!visible())return;const now=performance.now();if(now-previous<33)return;previous=now;rotation+=.008;
-  if(preview)preview.rotation.y=rotation;
+ const draw=()=>{if(!visible())return;const now=performance.now();if(now-previous<33)return;previous=now;rotation+=.008;idleClock+=.033;
+  if(preview){preview.rotation.y=rotation;preview.position.y=mode==="operator"?Math.sin(idleClock*1.7)*.018:Math.sin(idleClock*1.1)*.009;
+   if(mode==="operator")for(const part of animatedParts){part.mesh.rotation.x=part.sign*Math.sin(idleClock*1.65)*(part.kind==="arm"?.055:.025);}
+  }
   if(scene)scene.render();else render2d(selection());
  };
  if(engine)engine.runRenderLoop(draw);else{const loop=()=>{draw();requestAnimationFrame(loop)};requestAnimationFrame(loop);}
