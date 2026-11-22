@@ -1,0 +1,15 @@
+/* STRIKE 5 V6 procedural 3D operator and gun inspection panel */
+#inspectionDeck{display:grid;grid-template-columns:minmax(210px,36%) 1fr;gap:13px;align-items:center;margin:12px 0 4px;border:1px solid #56deed54;background:linear-gradient(135deg,#081623d9,#0a3442a9);padding:9px;border-radius:13px;min-height:160px}
+#inspectVisual{height:154px;position:relative;min-width:0;background:radial-gradient(ellipse at 58% 64%,#15516b,#051323);border-radius:10px;overflow:hidden}
+#inspectCanvas{width:100%;height:100%;touch-action:none;display:block;outline:none}
+#inspectVisual:after{content:'DRAG TO ROTATE · PROCEDURAL 3D';position:absolute;bottom:4px;left:0;right:0;color:#b2d1dc;text-align:center;font-size:8px;font-weight:700;letter-spacing:1px;pointer-events:none}
+#inspectInfo{display:flex;flex-direction:column;justify-content:center;min-width:0;gap:5px}
+#inspectInfo .inspectEyebrow{font-size:10px;font-weight:900;letter-spacing:2px;color:#7ef2f6}
+#inspectorTitle{font-weight:950;font-size:clamp(18px,2.4vw,28px);line-height:1.08;overflow-wrap:anywhere}
+#inspectorDetail{font-size:11px;line-height:1.35;font-weight:750;color:#e0f3fa}
+#inspectorSpec{font-size:10px;color:#b3ccd5;line-height:1.35}
+.inspectTabs{display:flex;gap:7px;margin-top:5px}
+.inspectTabs button{border-radius:7px;min-height:31px;padding:5px 12px;background:#173244;color:#e9faff;border:1px solid #75c7d877;font-size:10px;font-weight:900;cursor:pointer;touch-action:manipulation}
+.inspectTabs button.selected{background:#3dd5e6;color:#071c25;border-color:#74f7ff}
+@media(max-height:440px){#inspectVisual{height:113px}#inspectionDeck{min-height:122px;padding:6px;margin:8px 0 3px}}
+@media(max-width:550px){#inspectionDeck{grid-template-columns:1fr}#inspectVisual{height:160px}}
