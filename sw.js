@@ -1,5 +1,5 @@
-const CACHE = 'strike5-v5';
-const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon.svg', './lobby.css', './lobby.js', './vendor/babylon.js'];
+const CACHE = 'strike5-v6';
+const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon.svg', './lobby.css', './lobby.js', './preview.css', './preview.js', './vendor/babylon.js'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(()=>self.skipWaiting()));
 });

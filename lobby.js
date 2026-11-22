@@ -17,8 +17,9 @@
     return copy.textContent.trim().slice(0, 36);
   }
   function syncLobby() {
-    const char = selectedLabel('charChoices');
-    const weapon = selectedLabel('gunChoices');
+    const current=window.STRIKE5ReadOnly?.getSelection?.();
+    const char = current?.character?.name || selectedLabel('charChoices');
+    const weapon = current?.weapon?.name || selectedLabel('gunChoices');
     by('lobbyOperator').textContent = char;
     by('lobbyWeapon').textContent = weapon;
     by('lobbyPlayerName').textContent = char;
