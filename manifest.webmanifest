@@ -1,7 +1,7 @@
 {
-  "name": "STRIKE 5 — V6 Tactical Inspector",
+  "name": "STRIKE 5 — V7 Tactical Gear & Combat",
   "short_name": "STRIKE 5",
-  "description": "STRIKE 5 offline bot FPS with tactical operator and weapon 3D inspection",
+  "description": "Mobile FPS bot playtest with improved camo gear, operator idle animation and combat visuals",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
