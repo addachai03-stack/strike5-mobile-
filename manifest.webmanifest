@@ -1,7 +1,7 @@
 {
-  "name": "STRIKE 5 — Homepage + 5v5 Lobby V5",
+  "name": "STRIKE 5 — V6 Tactical Inspector",
   "short_name": "STRIKE 5",
-  "description": "STRIKE 5 V5 bot lobby, homepage, operators, guns and match gameplay",
+  "description": "STRIKE 5 offline bot FPS with tactical operator and weapon 3D inspection",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
